@@ -83,7 +83,7 @@ class Database {
     function reservarOferta($codigo , $idUser){
         
         try{
-            $query = "UPDATE oferta SET IdUserComprador='$idUser'  WHERE codigo ='$codigo' ";
+            $query = "UPDATE oferta SET IdUserComprador='$idUser',estado= 'reservada'   WHERE codigo ='$codigo' ";
             return $this->db->exec($query);
         }
         

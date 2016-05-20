@@ -66,13 +66,22 @@ function getOfertas(){
        echo '<html>el codigo es '.$codigo.'</html>'; 
     
        $db= new Database();
-    $oferta= $db->getOfertaCodigo($codigo); 
+       $oferta= $db->getOfertaCodigo($codigo); 
+       armarJson($oferta,"oferta");
     
-    if ($oferta) 
+    }
+
+   /**
+    retorna el json
+    * recibe el mensaje a mandar y el tipo de dato que es 
+    *     */
+ function armarJson($mensaje,$dato){
+    
+     if ($mensaje) 
     {
 
         $datos["estado"] = 1;
-        $datos["oferta"] = $oferta;
+        $datos[$dato] = $mensaje;
 
         print json_encode($datos);
        
@@ -84,6 +93,10 @@ function getOfertas(){
                 "mensaje" => "Ha ocurrido un error"
             ));
         }
-    }
-
-
+     
+ }   
+ function getOfertasUbicacion($ubicacion){
+    
+    
+    
+}

@@ -11,7 +11,7 @@
  *
  * @author tino
  */
-require 'Database.php';
+require 'Database2.php';
 
  //http://localhost:85/webServiceAndroid2/respuestasUsuario.php?funcion=getOfertas 
 
@@ -29,27 +29,23 @@ switch ($funcion) {
     case "getOfertaCodigo":
        getOfertaCodigo();
         break;
+    case "getOfertasUbicacion":
+       getOfertaUbicacion();
+        break;
+    case "getOfertasDeporte":
+       getOfertasDeporte();
+        break;
+    case "reservarOferta":
+        reservarOferta();
+        break;
+    
 }
 
 function getOfertas(){   
     // Manejar petición GET
     $db= new Database();
     $ofertas= $db->getOfertas(); 
-    if ($ofertas) {
-
-        $datos["estado"] = 1;
-        $datos["ofertas"] = $ofertas;
-
-        print json_encode($datos);
-       
-    }
-    else 
-        {
-        print json_encode(array(
-            "estado" => 2,
-            "mensaje" => "Ha ocurrido un error"
-        ));
-    }
+    armarJson($ofertas, "ofertas");
 }
     /**
     retorna una oferta parseada en json, cuyo codigo es $codigo
@@ -63,14 +59,74 @@ function getOfertas(){
         else{
             echo '<html> no hay codigo </html>';
         }
-       echo '<html>el codigo es '.$codigo.'</html>'; 
+     
     
        $db= new Database();
        $oferta= $db->getOfertaCodigo($codigo); 
        armarJson($oferta,"oferta");
     
     }
-
+    
+ function getOfertaUbicacion($ubicacion){
+    if (isset($_GET['ubicacion'])) {
+             $ubicacion = $_GET['ubicacion'];
+        }
+        else{
+            echo '<html> no hay ubicacion </html>';
+        }
+       $db= new Database();
+       $ofertas= $db->getOfertaUbicacion($ubicacion); 
+       armarJson($ofertas,"ofertas");
+    
+    
+}
+ function getOfertasDeporte(){
+      if (isset($_GET['deporte'])) {
+             $deporte = $_GET['deporte'];
+        }
+        else{
+            echo '<html> no hay deporte </html>';
+        }
+       $db= new Database();
+       $ofertas= $db->getOfertasDeporte($deporte); 
+       armarJson($ofertas,"ofertas");
+ }
+ /*
+  * http://localhost:85/webServiceAndroid2/respuestasUsuario.php?funcion=reservarOferta&codigo=123&idUser=1
+ */
+  function reservarOferta(){
+      
+      
+      if (isset($_GET['codigo'])) {
+             $codigo = $_GET['codigo'];
+        }
+        else{
+            echo '<html> no hay codgigo </html>';
+        }
+      if (isset($_GET['idUser'])) {
+             $idUser = $_GET['idUser'];
+        }
+        else{
+            echo '<html> no hay idUser </html>';
+        }
+       $db= new Database();
+       
+       if($db->reservarOferta($codigo, $idUser))
+        {
+                $datos["estado"] = 1;
+                $datos['ok'] = 'true';
+                print json_encode($datos);
+        }
+       else
+           {
+            $datos["estado"] = 0;
+            $datos['ok'] = 'false';
+            print json_encode($datos);
+       }
+       
+       
+        
+  }
    /**
     retorna el json
     * recibe el mensaje a mandar y el tipo de dato que es 
@@ -95,8 +151,3 @@ function getOfertas(){
         }
      
  }   
- function getOfertasUbicacion($ubicacion){
-    
-    
-    
-}

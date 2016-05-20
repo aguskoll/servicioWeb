@@ -1,0 +1,2 @@
+-agregar ubicacion a la fecha
+-idfoto al deporte

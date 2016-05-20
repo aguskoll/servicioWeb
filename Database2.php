@@ -35,21 +35,62 @@ class Database {
     public function getOfertas() {
         $consulta = "select * from oferta";
         try {
-            echo '<html>Entre consulta</html>';
+           
+            return $this->db->query($consulta)->fetchAll();
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+    /**
+    retorna una oferta cuyo codigo sea $codigo
+     *      */
+     public function getOfertaCodigo($codigo) {
+        $consulta = 'select * from oferta where codigo='.$codigo;
+        try {
+           
+            return $this->db->query($consulta)->fetch();
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+    /**
+    retorna una oferta cuya ubicacion sea $ubicacion
+     *      */
+     public function getOfertaUbicacion($ubicacion) {
+        $consulta = 'select * from oferta where ubicacion='.$ubicacion;
+        try {
+            
             return $this->db->query($consulta)->fetchAll();
         } catch (PDOException $e) {
             return false;
         }
     }
     
-     public function getOfertaCodigo($codigo) {
-        $consulta = 'select * from oferta where codigo='.$codigo;
+    public function getOfertasDeporte($deporte) {
+        $consultaDeporte = "select id from deporte where nombre ='$deporte'";
+        $resultado= $this->db->query($consultaDeporte)->fetch();
+        $deporteID=$resultado['id'];
+        
+        $consulta = "select * from oferta where deporte='$deporteID' ";
         try {
-            echo '<html>Entre consulta</html>';
-            return $this->db->query($consulta)->fetch();
+            
+           return $this->db->query($consulta)->fetchAll();
         } catch (PDOException $e) {
             return false;
         }
-}
+    }
+    
+    function reservarOferta($codigo , $idUser){
+        
+        try{
+            $query = "UPDATE oferta SET IdUserComprador='$idUser'  WHERE codigo ='$codigo' ";
+            return $this->db->exec($query);
+        }
+        
+        catch (PDOException $e) {
+            return false;
+        }
+    }
+
 }
 ?>

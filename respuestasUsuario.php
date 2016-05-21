@@ -19,7 +19,7 @@ require 'Database2.php';
 //if ($_SERVER['REQUEST_METHOD'] == 'GET') 
 if (isset($_GET['funcion'])) {
     $funcion = $_GET['funcion'];
-    echo '<html> funcion es '.$funcion.' </html>';
+   // echo '<html> funcion es '.$funcion.' </html>';
 } 
 
 switch ($funcion) {
@@ -45,6 +45,9 @@ function getOfertas(){
     // Manejar petición GET
     $db= new Database();
     $ofertas= $db->getOfertas(); 
+  
+      
+            
     armarJson($ofertas, "ofertas");
 }
     /**
@@ -63,7 +66,7 @@ function getOfertas(){
     
        $db= new Database();
        $oferta= $db->getOfertaCodigo($codigo); 
-       armarJson($oferta,"oferta");
+       armarJson($oferta,"ofertas");
     
     }
     
@@ -120,7 +123,7 @@ function getOfertas(){
        else
            {
             $datos["estado"] = 0;
-            $datos['ok'] = 'false';
+            $datos["ok"] = 'false';
             print json_encode($datos);
        }
        

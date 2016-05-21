@@ -42,8 +42,8 @@ class Database {
     public function getOfertas() {
         $consulta = "select * from oferta";
         try {
-            $resultado = $this->db->query($consulta)->fetchAll();
-            $ofertas = array(); //creamos un array
+            $resultado = $this->db->query($consulta)->fetchAll(PDO::FETCH_ASSOC);
+            /*$ofertas = array(); //creamos un array
             $i = 0;
             $total = count($resultado);
             while ($i < $total) {
@@ -62,14 +62,16 @@ class Database {
                     'idUserCreador' => $creador, 
                     'deporte' => $deporte,'hora'=>$hora,
                     'fecha'=>$fecha, 'precioHabitual'=>$precioHabitual,
-                     'precioOferta'=>$precioOferta);
+                    'precioOferta'=>$precioOferta);
 
                 $i = $i + 1;
             }
+             * */
+            
         } catch (PDOException $e) {
             return false;
         }
-        return $ofertas;
+        return $resultado;
     }
 
     /**
@@ -92,7 +94,7 @@ class Database {
         $consulta = 'select * from oferta where ubicacion=' . $ubicacion;
         try {
 
-            return $this->db->query($consulta)->fetchAll();
+            return $this->db->query($consulta)->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             return false;
         }
@@ -106,7 +108,7 @@ class Database {
         $consulta = "select * from oferta where deporte='$deporteID' ";
         try {
 
-            return $this->db->query($consulta)->fetchAll();
+            return $this->db->query($consulta)->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             return false;
         }

@@ -31,7 +31,7 @@ class Database {
             $dsn = 'mysql:host=127.0.0.1;dbname=bd_android;mysql:port=3306;mysql:charset=utf8mb4';
             $usuario = 'root';
             $contraseña = '';
-            $this->db = new PDO($dsn, $usuario, $contraseña);
+            $this->db = new PDO($dsn, $usuario, $contraseña,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
         } catch (PDOException $e) {
             die('Connection failed: ' . $e->getMessage());
         }

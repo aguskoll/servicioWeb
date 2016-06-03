@@ -112,13 +112,13 @@ function getOfertas(){
         {
                 $datos["estado"] = 1;
                 $datos['ok'] = 'true';
-                print json_encode($datos);
+                print json_encode($datos, JSON_UNESCAPED_UNICODE);
         }
        else
            {
             $datos["estado"] = 0;
             $datos["ok"] = 'false';
-            print json_encode($datos);
+            print json_encode($datos, JSON_UNESCAPED_UNICODE);
        }
        
        
@@ -136,7 +136,7 @@ function getOfertas(){
         $datos["estado"] = 1;
         $datos[$dato] = $mensaje;
 
-        print json_encode($datos);
+        print json_encode($datos, JSON_UNESCAPED_UNICODE);
        
     }
     else 

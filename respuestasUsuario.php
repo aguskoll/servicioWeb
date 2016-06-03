@@ -1,33 +1,24 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//No es necesario el require 'Database2.php' porque ya esta en este require, que es necesario
+//Para una consulta mas abajo
+require 'ConsultasEstablecimiento.php';
 
-/**
- * Description of respuestasUsuario
- *
- * @author tino
- */
-require 'Database2.php';
-
- //http://localhost:85/webServiceAndroid2/respuestasUsuario.php?funcion=getOfertas 
-
-    
 //if ($_SERVER['REQUEST_METHOD'] == 'GET') 
 if (isset($_GET['funcion'])) {
     $funcion = $_GET['funcion'];
-   // echo '<html> funcion es '.$funcion.' </html>';
 } 
+else {
+	$funcion= '';
+}
 
 switch ($funcion) {
-    case "getOfertas":
+    case "getOfertas": {
         getOfertas();
         break;
-    case "getOfertaCodigo":
-       getOfertaCodigo();
+	}
+    case "getOfertaCodigo": {
+        getOfertaCodigo();
         break;
     case "getOfertasUbicacion":
        getOfertaUbicacion();
@@ -38,7 +29,10 @@ switch ($funcion) {
     case "reservarOferta":
         reservarOferta();
         break;
-    
+	case 'getOfertasPorEstablecimiento': {
+		getOfertasPorEstablecimiento();
+		break;
+	}
 }
 
 function getOfertas(){   
@@ -153,4 +147,12 @@ function getOfertas(){
             ));
         }
      
- }   
+ }
+ 
+function getOfertasPorEstablecimiento() {
+	if(isset($_GET['idEstablecimiento'])) {
+		$id= $_GET['idEstablecimiento'];
+		$dato= Establecimiento::getOfertasPorEstablecimiento($id);
+		armarJson($dato, "ofertas");		
+	}
+}

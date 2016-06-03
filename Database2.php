@@ -24,7 +24,7 @@ class Database {
     #Genera la conexion a la bd
     private function connect() {
         try {
-            $dsn = 'mysql:host=127.0.0.1;dbname=db_android;mysql:port=3306';
+            $dsn = 'mysql:host=127.0.0.1;dbname=bd_android;mysql:port=3306;mysql:charset=utf8mb4';
             $usuario = 'root';
             $contraseña = '';
             $this->db = new PDO($dsn, $usuario, $contraseña);
@@ -35,7 +35,6 @@ class Database {
     public function getOfertas() {
         $consulta = "select * from oferta";
         try {
-            echo '<html>Entre consulta</html>';
             return $this->db->query($consulta)->fetchAll();
         } catch (PDOException $e) {
             return false;
@@ -45,11 +44,24 @@ class Database {
      public function getOfertaCodigo($codigo) {
         $consulta = 'select * from oferta where codigo='.$codigo;
         try {
-            echo '<html>Entre consulta</html>';
             return $this->db->query($consulta)->fetch();
         } catch (PDOException $e) {
             return false;
         }
+	}
+	
+	public function getDeportes() {
+		$consulta= "SELECT nombre FROM deporte";
+		try {			
+			$comando= $this->db->prepare($consulta);
+			$comando->execute();			
+			return $comando->fetchAll(PDO::FETCH_ASSOC);
+		} catch(PDOException $e) {
+			return -1;
+		}
+	}
+	
+	public function getDB() {
+		return $this->db;
+	}
 }
-}
-?>

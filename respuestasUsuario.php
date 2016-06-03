@@ -11,24 +11,33 @@
  *
  * @author tino
  */
-require 'Database.php';
+require 'ConsultasEstablecimiento.php';
 
- //http://localhost:85/webServiceAndroid2/respuestasUsuario.php?funcion=getOfertas 
-
-    
 //if ($_SERVER['REQUEST_METHOD'] == 'GET') 
 if (isset($_GET['funcion'])) {
     $funcion = $_GET['funcion'];
-    echo '<html> funcion es '.$funcion.' </html>';
 } 
+else {
+	$funcion= '';
+}
 
 switch ($funcion) {
-    case "getOfertas":
+    case "getOfertas": {
         getOfertas();
         break;
-    case "getOfertaCodigo":
-       getOfertaCodigo();
+	}
+    case "getOfertaCodigo": {
+        getOfertaCodigo();
         break;
+	}
+	case 'getOfertasPorEstablecimiento': {
+		getOfertasPorEstablecimiento();
+		break;
+	}
+	default: {
+		echo '<html> default </html> ';
+		break;
+	}
 }
 
 function getOfertas(){   
@@ -99,4 +108,12 @@ function getOfertas(){
     
     
     
+}
+
+function getOfertasPorEstablecimiento() {
+	if(isset($_GET['idEstablecimiento'])) {
+		$id= $_GET['idEstablecimiento'];
+		$dato= Establecimiento::getOfertasPorEstablecimiento($id);
+		armarJson($dato, "ofertas");		
+	}
 }

@@ -80,30 +80,6 @@ function getOfertas(){
     
     }
 
-   /**
-    retorna el json
-    * recibe el mensaje a mandar y el tipo de dato que es 
-    *     */
- function armarJson($mensaje,$dato){
-    
-     if ($mensaje) 
-    {
-
-        $datos["estado"] = 1;
-        $datos[$dato] = $mensaje;
-
-        print json_encode($datos);
-       
-    }
-    else 
-        {
-            print json_encode(array(
-                "estado" => 2,
-                "mensaje" => "Ha ocurrido un error"
-            ));
-        }
-     
- }   
  function getOfertasUbicacion($ubicacion){
     
     
@@ -114,6 +90,6 @@ function getOfertasPorEstablecimiento() {
 	if(isset($_GET['idEstablecimiento'])) {
 		$id= $_GET['idEstablecimiento'];
 		$dato= Establecimiento::getOfertasPorEstablecimiento($id);
-		armarJson($dato, "ofertas");		
+		armarJson($dato, "ofertas");
 	}
 }

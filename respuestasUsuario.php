@@ -148,11 +148,11 @@ function getOfertas(){
         }
      
  }
- 
+
 function getOfertasPorEstablecimiento() {
 	if(isset($_GET['idEstablecimiento'])) {
 		$id= $_GET['idEstablecimiento'];
 		$dato= Establecimiento::getOfertasPorEstablecimiento($id);
-		armarJson($dato, "ofertas");		
+		armarJson($dato, "ofertas");
 	}
 }
